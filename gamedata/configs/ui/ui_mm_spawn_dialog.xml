@@ -13,96 +13,51 @@
 			<texture>ui_save_load_back</texture>
 		</auto_static>
 	</background>
-	<item>
-		<main width="490" height="18" />
-		<name width="325" height="18" />
-		<alt width="110" height="18" />
-	</item>
+
+	<spawn_item width="420" height="18" />
+
 	<form x="50" y="252" width="560" height="460">
 		<texture>ui_inGame2_opt_main_window</texture>
-		<caption x="0" y="0" width="460" height="30" complex_mode="0">
+		<caption x="0" y="0" width="440" height="30">
 			<text font="graffiti32" align="c">Spawn Items</text>
 		</caption>
-		<btn_knives x="80" y="295" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Knives</text>
-		</btn_knives>
-		<btn_pistols x="80" y="315" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Pistols</text>
-		</btn_pistols>
-		<btn_shotguns x="80" y="335" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Shotguns</text>
-		</btn_shotguns>
-		<btn_assult_rifles x="80" y="355" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Assult Rifles</text>
-		</btn_assult_rifles>
-		<btn_sniper_rifles x="80" y="375" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Sniper Rifles</text>
-		</btn_sniper_rifles>
-		<btn_heavy_weapons x="80" y="395" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Heavy Weapons</text>
-		</btn_heavy_weapons>
-		<btn_ammunition x="80" y="415" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Ammunition</text>
-		</btn_ammunition>
-		<btn_explosives x="80" y="435" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Explosived</text>
-		</btn_explosives>
-		<btn_attachments x="80" y="455" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Addons</text>
-		</btn_attachments>
-		<btn_outfits x="80" y="485" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Outfits</text>
-		</btn_outfits>
-		<btn_equipment x="80" y="505" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Equipment</text>
-		</btn_equipment>
-		<btn_artefacts x="80" y="525" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Artefacts</text>
-		</btn_artefacts>
-		<btn_disposables x="80" y="545" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Disposables</text>
-		</btn_disposables>
-		<btn_quest_items x="80" y="575" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">Quest Items</text>
-		</btn_quest_items>
-		<btn_all_items x="80" y="605" width="90" height="20">
-			<texture>ui_inGame2_Mp_bigbuttone</texture>
-			<text font="letterica18">All Items</text>
-		</btn_all_items>
-		<list_frame x="180" y="295" width="340" height="365">
+
+		<category_selector x="80" y="295" width="440" height="20" list_length="10">
+			<list_font r="170" g="170" b="170" font="letterica16" />
+			<text_color>
+				<e r="170" g="170" b="170" />
+				<d r="70" g="70" b="70" />
+			</text_color>
+		</category_selector>
+
+		<list_frame x="80" y="320" width="440" height="308">
 			<texture>ui_inGame2_servers_list_frame</texture>
 		</list_frame>
-		<list x="182" y="295" width="338" height="365" item_height="18" can_select="1">
+		<list x="82" y="320" width="438" height="306" item_height="18" can_select="1">
 			<font font="letterica16" />
 		</list>
+
+		<cap_distance x="80" y="635" width="400" height="25" complex_mode="0">
+			<text font="letterica16" r="170" g="170" b="170" align="r" vert_align="c">NPC spawn distance (in front of player)</text>
+		</cap_distance>
+		<txt_distance x="490" y="635" width="30" height="24">
+			<texture>ui_linetext_e</texture>
+			<text font="letterica18" r="115" g="114" b="112" />
+		</txt_distance>
 
 		<btn_apply x="135" y="683" width="135" height="26">
 			<text font="letterica18" align="c">ui_mm_apply</text>
 			<texture>ui_button_main01</texture>
-            <text_color>
-                <e r="170" g="170" b="170"/>
-            </text_color>
+			<text_color>
+				<e r="170" g="170" b="170" />
+			</text_color>
 		</btn_apply>
 		<btn_cancel x="301" y="683" width="135" height="26">
 			<text font="letterica18" align="c">ui_mm_cancel</text>
 			<texture>ui_button_main01</texture>
-            <text_color>
-                <e r="170" g="170" b="170"/>
-            </text_color>
+			<text_color>
+				<e r="170" g="170" b="170" />
+			</text_color>
 		</btn_cancel>
 	</form>
 </w>

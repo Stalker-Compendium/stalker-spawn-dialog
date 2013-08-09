@@ -1,9 +1,9 @@
 -- File:        ui_mm_spawn_dialog.script
--- Description: Spawn Dialog for STALKER CoP with Misery 2.0
+-- Description: Spawn Dialog for STALKER CoP: Misery 2.0
 -- Created:     2013/08/03
--- Last edit:	2013/08/03
+-- Last edit:	2013/08/10
 -- Author:      Rowan Lewis [Measly Twerp] (rl@nbsp.io)
--- Version:     1.0
+-- Version:     1.1
 
 local knives = {
 	"wpn_knife",
@@ -46,6 +46,7 @@ local pistols = {
 	"wpn_hpsa_worn",
 	"wpn_oc33",
 	"wpn_pb",
+	"wpn_personal_1",
 	"wpn_pm",
 	"wpn_pm_actor",
 	"wpn_pm_alt",
@@ -164,6 +165,8 @@ local assault_rifles = {
 	"wpn_lr300_worn",
 	"wpn_m16a1",
 	"wpn_m1891",
+	"wpn_m1891_alt",
+	"wpn_m1891_alun",
 	"wpn_m4a1",
 	"wpn_mp5",
 	"wpn_mp5_alt",
@@ -176,7 +179,6 @@ local assault_rifles = {
 	"wpn_ppsh41_woodnew",
 	"wpn_ppsh41_woodworn",
 	"wpn_rpk74",
---	"wpn_sako",						-- Does not appear to be complete.
 	"wpn_scorpion",
 	"wpn_sig550",
 	"wpn_sig550_alt",
@@ -186,6 +188,7 @@ local assault_rifles = {
 	"wpn_sig550_worn",
 	"wpn_sig552",
 	"wpn_sks",
+	"wpn_sks_modern",
 	"wpn_stg44",
 	"wpn_stg44_alt",
 	"wpn_stg44_new",
@@ -196,6 +199,7 @@ local assault_rifles = {
 	"wpn_vsk94",
 	"wpn_xm8",
 --	"wpn_aug",						-- Disabled because it causes a crash.
+--	"wpn_sako",						-- Does not appear to be complete.
 }
 
 local sniper_rifles = {
@@ -212,7 +216,7 @@ local sniper_rifles = {
 	"wpn_vintorez",
 	"wpn_vintorez_ap",
 	"wpn_vintorez_nimble",
---	"wpn_ksvk",							-- Disabled because it causes a crash.
+	"wpn_ksvk",							-- Added in Misery 2.0.1
 }
 
 local heavy_weapons = {
@@ -244,6 +248,7 @@ local ammunition = {
 	"ammo_12x70_buck",
 	"ammo_12x76_zhekan",
 	"ammo_12x76_zhekan_heli",
+	"ammo_12.7x108_ap",
 	"ammo_357_hp_mag",
 	"ammo_357_hp_mag_ap",
 	"ammo_5.45x39_ap",
@@ -272,6 +277,7 @@ local ammunition = {
 	"ammo_m209",
 	"ammo_magnum_300",
 	"ammo_magnum_300_ap",
+	"ammo_og-7b",
 	"ammo_pkm_100",
 	"ammo_vog-25",
 }
@@ -318,12 +324,15 @@ local attachments = {
 }
 
 local outfits = {
+	"coat_heavy_outfit",
+	"coat_outfit",
 	"cs_heavy_outfit",
 	"dolg_heavy_outfit",
 	"dolg_outfit",
 	"ecologist_green_outfit",
 	"exo_outfit",
 	"helm_battle",
+	"helm_cloth_mask",
 	"helm_hardhat",
 	"helm_hardhat_snag",
 	"helm_protective",
@@ -617,16 +626,485 @@ local quest_items = {
 	"zat_b57_gas",
 }
 
+local non_player_characters = {
+	{"flesh_normal",						"Flesh"},
+	{"flesh_strong",						"Flesh (Strong)"},
+
+	{"bloodsucker_normal",					"Bloodsucker"},
+	{"bloodsucker_weak",					"Bloodsucker (Weak)"},
+	{"bloodsucker_strong",					"Bloodsucker (Strong)"},
+
+	{"dog_normal",							"Dog"},
+	{"dog_weak",							"Dog (Weak)"},
+	{"dog_strong",							"Dog (Strong)"},
+	{"dog_cute",							"Dog (Cute)"},
+
+	{"boar_normal",							"Boar"},
+	{"boar_strong",							"Boar (Strong)"},
+
+	{"pseudodog_normal",					"Pseudodog"},
+
+	{"psy_dog_normal",						"PsyDog"},
+	{"psy_dog_phantom",						"Psydog (Phantom)"},
+
+	{"gigant_normal",						"Pseudogiant"},
+
+	{"m_controller_normal",					"Controller"},
+	{"controller_tubeman",					"Controller (Tubeman)"},
+	{"controller_fake",						"Controller (Fake)"},
+
+	{"m_poltergeist_normal_flame",			"Poltergeist (Flame)"},
+	{"m_poltergeist_normal_tele",			"Poltergeist (Tele)"},
+	{"labx8_poltergeist",					"Poltergeist (Lab X8)"},
+	{"poltergeist_fake",					"Poltergeist (Fake)"},
+	"pri_a25_poltergeist",
+
+	{"snork_normal",						"Snork"},
+	{"snork_weak",							"Snork (Weak)"},
+	{"snork_strong",						"Snork (Strong)"},
+	{"snork_indoor",						"Snork (Indoors)"},
+	{"snork_outdoor",						"Snork (Outdoors)"},
+
+	{"tushkano_normal",						"Rat"},
+
+	{"chimera_normal",						"Chimera"},
+
+	{"burer_normal",						"Burer"},
+
+	"zombie_1_ghost",
+	"zombie_1_ghost",
+	"zombie_2_ghost",
+	"zombie_3_ghost",
+	"zombie_1",
+	"zombie_2",
+	"zombie_3",
+	"zombie_trup_1",
+	"zombie_trup_2",
+
+	{"fracture_normal",						"Fracture"},
+	{"fracture_weak",						"Fracture (Weak)"},
+	{"fracture_strong",						"Fracture (Strong)"},
+
+	{"cat_normal",							"Cat"},
+	{"cat_weak",							"Cat (Weak)"},
+	{"cat_strong",							"Cat (Strong)"},
+
+	{"sci_1",								"Scientist 1"},
+	{"sci_2",								"Scientist 2"},
+	{"sci_3",								"Scientist 3"},
+
+	{"sim_default_duty_0",					"Duty (Beginner)"},
+	{"sim_default_duty_1",					"Duty (Stalker)"},
+	{"sim_default_duty_2",					"Duty (Pro)"},
+	{"sim_default_duty_3",					"Duty (Veteran)"},
+	{"sim_default_duty_4",					"Duty (Master)"},
+	"sim_default_duty_hunter_day_1",
+	"sim_default_duty_hunter_day_2",
+	"sim_default_duty_hunter_night",
+	"sim_default_duty_commando_sniper",
+	"sim_default_duty_commando_1",
+	"sim_default_duty_commando_2",
+
+	{"sim_default_monolith_0",				"Monolith (Beginner)"},
+	{"sim_default_monolith_1",				"Monolith (Stalker)"},
+	{"sim_default_monolith_2",				"Monolith (Pro)"},
+	{"sim_default_monolith_3",				"Monolith (Veteran)"},
+	{"sim_default_monolith_4",				"Monolith (Master)"},
+	"sim_default_monolith_sci_1",
+	"sim_default_monolith_sci_2",
+
+	{"sim_default_freedom_0",				"Freedom (Beginner)"},
+	{"sim_default_freedom_1",				"Freedom (Stalker)"},
+	{"sim_default_freedom_2",				"Freedom (Pro)"},
+	{"sim_default_freedom_3",				"Freedom (Veteran)"},
+	{"sim_default_freedom_4",				"Freedom (Master)"},
+	"sim_default_freedom_sci_1",
+	"sim_default_freedom_sci_2",
+
+	{"sim_default_bandit_0",				"Bandit (Beginner)"},
+	{"sim_default_bandit_1",				"Bandit (Stalker)"},
+	{"sim_default_bandit_2",				"Bandit (Pro)"},
+	{"sim_default_bandit_3",				"Bandit (Veteran)"},
+	{"sim_default_bandit_4",				"Bandit (Master)"},
+
+	{"sim_default_stalker_0",				"Stalker (Beginner)"},
+	{"sim_default_stalker_1",				"Stalker (Stalker)"},
+	{"sim_default_stalker_2",				"Stalker (Pro)"},
+	{"sim_default_stalker_3",				"Stalker (Veteran)"},
+	{"sim_default_stalker_4",				"Stalker (Master)"},
+	"sim_default_stalker_sci_1",
+	"sim_default_stalker_sci_2",
+	"sim_default_stalker_hunter_day",
+	"sim_default_stalker_hunter_night",
+	"sim_default_stalker_guide",
+
+	{"sim_default_military_0",				"Military (Beginner)"},
+	{"sim_default_military_1",				"Military (Stalker)"},
+	{"sim_default_military_2",				"Military (Pro)"},
+	{"sim_default_military_3",				"Military (Veteran)"},
+	{"sim_default_military_3_sniper",		"Military (Sniper)"},
+	{"sim_default_military_4",				"Military (Master)"},
+
+	{"sim_default_killer_0",				"Merc (Beginner)"},
+	{"sim_default_killer_1",				"Merc (Stalker)"},
+	{"sim_default_killer_2",				"Merc (Pro)"},
+	{"sim_default_killer_3",				"Merc (Veteran)"},
+	{"sim_default_killer_4",				"Merc (Master)"},
+
+	{"sim_default_zombied_1",				"Zombified (Stalker)"},
+	{"sim_default_zombied_2",				"Zombified (Pro)"},
+	{"sim_default_zombied_3",				"Zombified (Veteran)"},
+	{"sim_default_zombied_4",				"Zombified (Master)"},
+
+	"zat_stalker_medic",
+
+	"zat_b106_stalker_gonta",
+	"zat_b14_stalker_1",
+	"zat_b14_stalker_2",
+	"zat_b14_stalker_3",
+	"zat_b38_stalker_cop",
+	"zat_b38_stalker_corpse_1",
+	"zat_b38_stalker_corpse_2",
+	"zat_b38_stalker_corpse_3",
+	"zat_b38_stalker_cop_dead",
+	"zat_b38_stalker_hunter",
+	"zat_b30_owl_stalker_trader",
+	"zat_b7_duty_illicit_dealer",
+	"zat_b5_stalker_raider_1",
+	"zat_b5_stalker_raider_2",
+	"zat_b5_stalker_raider_3",
+	"zat_b5_stalker_raider_4",
+	"zat_b5_stalker_raider_leader",
+	"zat_b7_bandit_boss_dead",
+	"zat_b5_stalker_commander",
+	"zat_b5_stalker_commander_b7",
+	"zat_b5_stalker_1",
+	"zat_b5_stalker_2",
+	"zat_b5_stalker_3",
+	"zat_b5_stalker_4",
+	"zat_b5_dealer_assistant_1",
+	"zat_b5_dealer_assistant_2",
+	"zat_b7_bandit_boss_sultan",
+
+	{"zat_b18_noah",						"Noah"},
+
+	"pri_a17_military_captain_tarasov",
+	"pri_a17_military_prapor_valentyr",
+	"pri_a17_military_sergeant_morozov",
+	"pri_a17_military_lieutenant_podorojniy",
+	"pri_a17_monolith_preacher",
+	"pri_a17_military_colonel_kovalski",
+
+	"pri_a15_military_recon_leader",
+	"pri_a15_military_recon_1",
+	"pri_a15_military_recon_2",
+	"pri_a15_military_recon_3",
+
+	"jup_b218_vano_in_suit",
+	"pri_a15_sokolov",
+	"pri_a15_sokolov_sci",
+	"pri_a15_sokolov_sci_head",
+	"pri_a22_military_merkulov",
+	"pri_a22_military_skelja",
+
+	"pri_a21_sentry_lieutenant_stecenko",
+
+	"jup_a12_stalker_assaulter",
+	"jup_a12_stalker_diplomat",
+	"jup_a12_stalker_prisoner",
+	"jup_a12_bandit_chief",
+	"jup_a12_bandit_guard",
+	"jup_a12_bandit_cashier",
+	"jup_a12_merc_cover",
+
+	"jup_b207_merc_illicit_dealer",
+	"jup_b207_merc_leader",
+	"jup_b207_duty_security_squad_leader",
+	"jup_b207_freedom_recon_squad_leader",
+	"jup_b207_freedom_assault_squad_leader",
+
+	"jup_a10_bandit_leader",
+	"jup_a10_stalker_vano",
+
+	"jup_b6_scientist_biochemist",
+	"jup_b6_scientist_nuclear_physicist",
+
+	"jup_b9_shliachin",
+
+	"jup_b217_stalker_tech",
+
+	"jup_b10_stalker_drunk",
+
+	"jup_b10_stalker_drunk_dead",
+
+	"jup_b220_trapper",
+
+	"jup_b4_monolith_squad_leader_monolith_skin",
+
+	"jup_b4_monolith_squad_leader_duty_skin",
+
+	"jup_b4_monolith_squad_leader_freedom_skin",
+
+	"jup_b4_monolith_squad_leader_freedom_mon_skin",
+
+	"jup_b4_monolith_squad_leader_duty_mon_skin",
+
+	"jup_b4_monolith_squad_soldier_1_monolith_skin",
+
+	"jup_b4_monolith_squad_soldier_1_duty_skin",
+
+	"jup_b4_monolith_squad_soldier_1_freedom_skin",
+
+	"jup_b4_monolith_squad_soldier_2_monolith_skin",
+
+	"jup_b4_monolith_squad_soldier_2_duty_skin",
+
+	"jup_b4_monolith_squad_soldier_2_freedom_skin",
+
+	"jup_b4_monolith_squad_soldier_3_monolith_skin",
+
+	"jup_b4_monolith_squad_soldier_3_duty_skin",
+
+	"jup_b4_monolith_squad_soldier_3_freedom_skin",
+
+	"jup_b4_monolith_squad_soldier_4_monolith_skin",
+
+	"jup_b4_monolith_squad_soldier_4_duty_skin",
+
+	"jup_b4_monolith_squad_soldier_4_freedom_skin",
+
+	"jup_b4_monolith_squad_soldier_5_monolith_skin",
+
+	"jup_b4_monolith_squad_soldier_5_duty_skin",
+
+	"jup_b4_monolith_squad_soldier_5_freedom_skin",
+
+	"jup_b4_freedom_help",
+
+	"jup_b4_duty_help",
+
+	"jup_b4_freedom_leader",
+
+	"jup_b4_duty_leader",
+
+	"jup_b6_scientist_tech",
+	"jup_b1_stalker_1",
+	"jup_b1_stalker_2",
+	"jup_b1_stalker_3",
+	"jup_b1_stalker_4",
+	"jup_b1_pro_stalker_1",
+	"jup_b1_pro_stalker_2",
+	"jup_b1_pro_stalker_3",
+	"jup_b1_pro_stalker_4",
+
+	"jup_b6_freedom_stalker_1",
+	"jup_b6_freedom_stalker_2",
+	"jup_b6_freedom_stalker_3",
+	"jup_b6_freedom_stalker_4",
+
+	"jup_b6_duty_stalker_1",
+	"jup_b6_duty_stalker_2",
+	"jup_b6_duty_stalker_3",
+	"jup_b6_duty_stalker_4",
+
+	"jup_b6_stalker_prisoner",
+	"jup_b6_stalker_assaulter",
+	"jup_b6_stalker_diplomat",
+
+	"jup_b6_stalker_gonta",
+	"jup_b6_stalker_garmata",
+	"jup_b6_stalker_crab",
+
+	"zat_a2_stalker_barmen",
+	"zat_a2_stalker_mechanic",
+	"zat_a2_stalker_nimble",
+
+	"zat_b22_stalker_medic",
+
+	"jup_b25_stalker_senya",
+	"jup_b25_freedom_flint",
+
+	"zat_b103_lost_merc_leader",
+	"zat_b103_lost_merc_1",
+	"zat_b103_lost_merc_2",
+	"zat_b103_lost_merc_3",
+	"zat_b103_lost_merc_4",
+	"zat_b103_lost_merc_5",
+	"zat_b103_lost_merc_6",
+	"zat_b103_lost_merc_7",
+
+	"zat_b7_stalker_raider_leader",
+	"zat_b7_stalker_raider_1",
+	"zat_b7_stalker_raider_2",
+	"zat_b7_stalker_raider_3",
+	"zat_b7_stalker_victim_1",
+
+	"zat_b33_stalker_snag",
+	"zat_b28_draper",
+	"zat_b28_umerov",
+	"zat_b28_smoliak",
+
+	"zat_b100_military_1",
+	"zat_b100_military_2",
+	"zat_b100_military_3",
+
+	"zat_b42_mayron",
+
+	"zat_b29_stalker_rival_1",
+	"zat_b29_stalker_rival_2",
+	"zat_b29_stalker_rival_default_1",
+	"zat_b29_stalker_rival_default_2",
+
+	"zat_b52_port_bandit_leader",
+
+	"jup_a6_stalker_medik",
+	"jup_b15_zulus",
+	"jup_b202_stalker_snag",
+	"jup_a6_stalker_barmen",
+	"jup_b202_bandit",
+
+	"jup_b19_freedom_yar",
+	"jup_b19_merc_1",
+	"jup_b19_merc_2",
+	"jup_b19_merc_3",
+	"jup_b19_merc_4",
+	"jup_b19_merc_5",
+
+	"jup_b43_stalker_assistant",
+
+	"zat_b215_stalker_guide",
+
+	"pri_a25_army_medic",
+
+	"pri_a15_actor",
+	"pri_a15_vano",
+	"pri_a15_sokolov_scene",
+	"pri_a15_zulus",
+	"pri_a15_wanderer",
+	"pri_a15_military_tarasov",
+	"pri_a15_military_2",
+	"pri_a15_military_3",
+	"pri_a15_military_4",
+
+	"pri_a22_army_signaller",
+	"pri_b35_merc_leader",
+	"pri_b35_merc_grenade_launcher_1",
+	"pri_b35_merc_grenade_launcher_2",
+	"pri_b35_envoy",
+	"pri_b35_guard_envoy_1",
+	"pri_b35_guard_envoy_2",
+
+	"pri_b306_envoy",
+
+	"jup_b46_duty_founder",
+	"jup_b46_duty_founder_squad_01",
+	"jup_b46_duty_founder_squad_02",
+	"jup_b46_duty_founder_squad_03",
+	"jup_b46_duty_founder_squad_04",
+	"jup_a6_freedom_leader",
+	"jup_a6_duty_leader",
+
+	"zat_b40_merc_squad_leader_1",
+	"zat_b40_merc_squad_leader_2",
+
+	"zat_b20_noah_teleport",
+
+	"zat_b44_stalker_barge",
+
+	"pri_b36_monolith_sniper",
+	"pri_b36_monolith_master_hiding_place",
+	"pri_b36_monolith_marine_sniper",
+
+	"zat_b53_artefact_hunter_1",
+	"zat_b53_artefact_hunter_2",
+
+	"pri_a22_military_yarmoshuk",
+
+	"pri_b305_strelok",
+
+	"pri_a28_evac_com",
+
+	"zat_b106_stalker_garmata",
+	"zat_b106_stalker_crab",
+
+	"jup_b47_merc_01",
+	"jup_b47_merc_02",
+	"jup_b47_merc_03",
+	"jup_b47_merc_04",
+	"jup_b47_merc_05",
+	"jup_b47_merc_06",
+	"jup_b47_merc_07",
+
+	"jup_b219_stalker_tech",
+	"jup_b219_monolith_squad_leader_freedom_skin",
+	"jup_b219_vano",
+	"jup_b219_soldier",
+	"jup_b219_zulus",
+
+	"pas_b400_vano",
+	"pas_b400_sokolov",
+	"pas_b400_zulus",
+	"pas_b400_wanderer",
+	"pas_b400_monolith_sniper",
+
+	"sim_default_stalker_pri_a16",
+}
+
+local weather_effects = {
+	{"af3_bright_clear_0",					"Clear"},
+	{"af3_bright_cloudy",					"Cloudy"},
+	{"af3_bright_foggy",					"Foggy"},
+	{"af3_bright_partly_0",					"Partly cloudy"},
+	{"af3_bright_rain",						"Rainy"},
+	{"af3_bright_storm",					"Stormy"},
+	{"af3_bright_veryfoggy",				"Very foggy"},
+}
+
+local categories = {
+	all =									'All Items',
+	knives =								'Knives',
+	pistols =								'Pistols',
+	shotguns =								'Shotguns',
+	assault_rifles =						'Assault Rifles',
+	sniper_rifles =							'Sniper Rifles',
+	heavy_weapons =							'Heavy Weapons',
+	ammunition =							'Ammunition',
+	explosives =							'Explosives',
+	attachments =							'Attachments',
+	artefacts =								'Artefacts',
+	outfits =								'Outfits',
+	equipment =								'Equipment',
+	disposables =							'Disposables',
+	quest_items =							'Quest Items',
+	non_player_characters =					'Non Player Characters',
+	weather_effects =						'Weather Effects',
+}
+
+local status = {
+	category =								categories.all,
+	npc_distance =							1,
+}
+
 class "list_item" (CUIListBoxItem)
 
-function list_item:__init(height) super(height)
-	self:SetTextColor(GetARGB(255, 216, 186, 140))
+function list_item:__init(size) super(size.y)
+	self:SetTextColor(GetARGB(255, 170, 170, 170))
+	self:SetWndSize(size)
 
-	self.name = self:GetTextItem()
-	self.name:SetWndRect(Frect():set(0, 0, 300, 22))
-	self.name:SetFont(GetFontLetterica18Russian())
-	self.name:SetWndSize(vector2():set(400, height))
+	self.nice = self:GetTextItem()
+	self.nice:SetFont(GetFontLetterica18Russian())
+	self.nice:SetEllipsis(true)
+	self.nice:SetWndPos(vector2():set(0, 0))
+	self.nice:SetWndSize(vector2():set(size.x * 0.6, size.y))
+
+	self.name = self:AddTextField('', size.x * 0.4)
+	self.name:SetFont(GetFontLetterica16Russian())
 	self.name:SetEllipsis(true)
+	self.name:SetWndPos(vector2():set(size.x * 0.6, 0))
+	self.name:SetWndSize(vector2():set(size.x * 0.4, size.y))
+end
+
+function list_item:__finalize()
 end
 
 class "dialog" (CUIScriptWnd)
@@ -644,246 +1122,75 @@ function dialog:InitControls(x, y, xml, handler)
 	self:SetWndRect(Frect():set(0, 0, 1024, 768))
 
 	local xml = CScriptXmlInit()
-	local ctrl = CUIWindow()
+	local ctrl
 
-	xml:ParseFile("ui_mm_spawn_dialog.xml")
-	xml:InitStatic("background", self)
+	xml:ParseFile('ui_mm_spawn_dialog.xml')
+	xml:InitStatic('background', self)
 
-	self.form = xml:InitStatic("form", self)
+	ctrl = CUIWindow()
+	xml:InitWindow('spawn_item', 0, ctrl)
+	self.spawn_item_size = vector2():set(ctrl:GetWidth(), ctrl:GetHeight())
 
-	xml:InitStatic("form:caption", self.form)
-
-	-- Weapons ----------------------------------------------
-
-	-- Knives [weapon_class: none]
-	ctrl = xml:Init3tButton("form:btn_knives", self)
-	self:Register(ctrl, "btn_knives")
-
-	-- Pistols [weapon_class: none]
-	ctrl = xml:Init3tButton("form:btn_pistols", self)
-	self:Register(ctrl, "btn_pistols")
-
-	-- Shotguns [weapon_class: shotgun]
-	ctrl = xml:Init3tButton("form:btn_shotguns", self)
-	self:Register(ctrl, "btn_shotguns")
-
-	-- Assult Rifles [weapon_class: assault_rifle]
-	ctrl = xml:Init3tButton("form:btn_assult_rifles", self)
-	self:Register(ctrl, "btn_assult_rifles")
-
-	-- Sniper Rifles [weapon_class: sniper_rifle]
-	ctrl = xml:Init3tButton("form:btn_sniper_rifles", self)
-	self:Register(ctrl, "btn_sniper_rifles")
-
-	-- Heavy Weapons [weapon_class: heavy_weapon]
-	ctrl = xml:Init3tButton("form:btn_heavy_weapons", self)
-	self:Register(ctrl, "btn_heavy_weapons")
-
-	-- Ammunition
-	ctrl = xml:Init3tButton("form:btn_ammunition", self)
-	self:Register(ctrl, "btn_ammunition")
-
-	-- Explosives
-	ctrl = xml:Init3tButton("form:btn_explosives", self)
-	self:Register(ctrl, "btn_explosives")
-
-	-- Attachments
-	ctrl = xml:Init3tButton("form:btn_attachments", self)
-	self:Register(ctrl, "btn_attachments")
+	self.form = xml:InitStatic('form', self)
+	xml:InitStatic('form:caption', self.form)
 
 
-	-- Gear -------------------------------------------------
+	-- Form -------------------------------------------------
 
-	-- Outfits
-	ctrl = xml:Init3tButton("form:btn_outfits", self)
-	self:Register(ctrl, "btn_outfits")
+	self.category_selector = xml:InitComboBox('form:category_selector', self)
+	self:Register(self.category_selector, 'category_selector')
 
-	-- Tools and Equipment
-	ctrl = xml:Init3tButton("form:btn_equipment", self)
-	self:Register(ctrl, "btn_equipment")
-
-	-- Artefacts
-	ctrl = xml:Init3tButton("form:btn_artefacts", self)
-	self:Register(ctrl, "btn_artefacts")
-
-	-- Disposables
-	ctrl = xml:Init3tButton("form:btn_disposables", self)
-	self:Register(ctrl, "btn_disposables")
+	xml:InitFrame('form:list_frame', self)
+	self.list = xml:InitListBox('form:list', self)
 
 
-	-- Misc -------------------------------------------------
+	-- NPC spawning -----------------------------------------
 
-	-- Quest Items
-	ctrl = xml:Init3tButton("form:btn_quest_items", self)
-	self:Register(ctrl, "btn_quest_items")
+	ctrl = xml:InitStatic('form:cap_distance', self)
+	self:Register(ctrl, 'form:cap_distance')
 
-	-- All Items
-	ctrl = xml:Init3tButton("form:btn_all_items", self)
-	self:Register(ctrl, "btn_all_items")
-
-	xml:InitFrame("form:list_frame", self)
-	self.list = xml:InitListBox("form:list", self)
+	self.npc_distance = xml:InitEditBox('form:txt_distance', self)
+	self:Register(self.npc_distance, 'txt_distance')
+	self.npc_distance:SetText(tostring(status.npc_distance))
 
 
 	-- Controls ---------------------------------------------
 
 	self.list:ShowSelectedItem(true)
-	self:Register(self.list, "list_window")
+	self:Register(self.list, 'list_window')
 
-	ctrl = xml:Init3tButton("form:btn_apply" ,self)
-	self:Register(ctrl, "btn_apply")
+	ctrl = xml:Init3tButton('form:btn_apply' ,self)
+	self:Register(ctrl, 'btn_apply')
 
-	ctrl = xml:Init3tButton("form:btn_cancel", self)
-	self:Register(ctrl, "btn_cancel")
+	ctrl = xml:Init3tButton('form:btn_cancel', self)
+	self:Register(ctrl, 'btn_cancel')
 end
 
 function dialog:InitCallBacks()
-	-- Weapons ----------------------------------------------
-
-	-- Knives [weapon_class: none]
-	self:AddCallback(
-		"btn_knives",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonKnivesClicked,
-		self
-	)
-
-	-- Pistols [weapon_class: none]
-	self:AddCallback(
-		"btn_pistols",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonPistolsClicked,
-		self
-	)
-
-	-- Shotguns [weapon_class: shotgun]
-	self:AddCallback(
-		"btn_shotguns",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonShotgunsClicked,
-		self
-	)
-
-	-- Assult Rifles [weapon_class: assault_rifle]
-	self:AddCallback(
-		"btn_assult_rifles",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonAssultRiflesClicked,
-		self
-	)
-
-	-- Sniper Rifles [weapon_class: sniper_rifle]
-	self:AddCallback(
-		"btn_sniper_rifles",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonSniperRiflesClicked,
-		self
-	)
-
-	-- Heavy Weapons [weapon_class: heavy_weapon]
-	self:AddCallback(
-		"btn_heavy_weapons",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonHeavyWeaponsClicked,
-		self
-	)
-
-	-- Ammunition
-	self:AddCallback(
-		"btn_ammunition",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonAmmunitionClicked,
-		self
-	)
-
-	-- Explosives
-	self:AddCallback(
-		"btn_explosives",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonExplosivesClicked,
-		self
-	)
-
-	-- Attachments
-	self:AddCallback(
-		"btn_attachments",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonAttachmentsClicked,
-		self
-	)
-
-
-	-- Gear -------------------------------------------------
-
-	-- Outfits
-	self:AddCallback(
-		"btn_outfits",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonOutfitsClicked,
-		self
-	)
-
-	-- Tools and Equipment
-	self:AddCallback(
-		"btn_equipment",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonEquipmentClicked,
-		self
-	)
-
-	-- Artefacts
-	self:AddCallback(
-		"btn_artefacts",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonArtefactsClicked,
-		self
-	)
-
-	-- Disposables
-	self:AddCallback(
-		"btn_disposables",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonDisposablesClicked,
-		self
-	)
-
-
-	-- Misc -------------------------------------------------
-
-	-- Quest Items
-	self:AddCallback(
-		"btn_quest_items",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonQuestItemsClicked,
-		self
-	)
-
-	-- All Items
-	self:AddCallback(
-		"btn_all_items",
-		ui_events.BUTTON_CLICKED,
-		self.OnButtonAllItemsClicked,
-		self
-	)
-
-
 	-- Controls ---------------------------------------------
 
 	self:AddCallback(
-		"list_window",
+		'category_selector',
+		ui_events.LIST_ITEM_SELECT,
+		self.OnCategoryItemSelect,
+		self
+	)
+
+	self:AddCallback(
+		'list_window',
 		ui_events.WINDOW_LBUTTON_DB_CLICK,
 		self.OnButtonApplyClicked,
 		self
 	)
 
     self:AddCallback(
-    	"btn_apply",
+    	'btn_apply',
     	ui_events.BUTTON_CLICKED,
     	self.OnButtonApplyClicked,
     	self
     )
 	self:AddCallback(
-		"btn_cancel",
+		'btn_cancel',
 		ui_events.BUTTON_CLICKED,
 		self.OnButtonCancelClicked,
 		self
@@ -892,115 +1199,89 @@ end
 
 function dialog:InitData()
 	self.data = {}
+	self.categories = 1
 
-	self:AppendData(knives, "knives")
-	self:AppendData(pistols, "pistols")
-	self:AppendData(shotguns, "shotguns")
-	self:AppendData(assault_rifles, "assault_rifles")
-	self:AppendData(sniper_rifles, "sniper_rifles")
-	self:AppendData(heavy_weapons, "heavy_weapons")
-	self:AppendData(ammunition, "ammunition")
-	self:AppendData(explosives, "explosives")
-	self:AppendData(attachments, "attachments")
-	self:AppendData(outfits, "outfits")
-	self:AppendData(equipment, "equipment")
-	self:AppendData(artefacts, "artefacts")
-	self:AppendData(disposables, "disposables")
-	self:AppendData(quest_items, "quest_items")
+	-- Add 'All Items' to combo box
+	self.category_selector:AddItem(categories.all, self.categories)
 
+	-- Build our data table
+	self:AppendData(categories.knives, knives)
+	self:AppendData(categories.pistols, pistols)
+	self:AppendData(categories.shotguns, shotguns)
+	self:AppendData(categories.assault_rifles, assault_rifles)
+	self:AppendData(categories.sniper_rifles, sniper_rifles)
+	self:AppendData(categories.heavy_weapons, heavy_weapons)
+	self:AppendData(categories.ammunition, ammunition)
+	self:AppendData(categories.explosives, explosives)
+	self:AppendData(categories.attachments, attachments)
+	self:AppendData(categories.artefacts, artefacts)
+	self:AppendData(categories.outfits, outfits)
+	self:AppendData(categories.equipment, equipment)
+	self:AppendData(categories.disposables, disposables)
+	self:AppendData(categories.quest_items, quest_items)
+	self:AppendData(categories.non_player_characters, non_player_characters)
+	self:AppendData(categories.weather_effects, weather_effects)
+
+	-- Sort all of the added data
 	table.sort(self.data, function(a, b) return a.sortable < b.sortable end)
 
-	self:FillList()
+	self:FillList(status.category)
 end
 
-function dialog:AppendData(data, type)
-	for key, value in ipairs(data) do
-		local item = {}
+function dialog:AppendData(category, data)
+	self.categories = 1 + self.categories
+	self.category_selector:AddItem(category, self.categories)
 
-		item.id = value
-		item.name = game.translate_string(
-			system_ini():r_string(value, 'inv_name')
-		)
-		item.name = item.name or item.id
+	for key, value in ipairs(data) do
+		local item = {
+			id =		value,
+			name =		value,
+			category =	category,
+		}
+
+		-- Custom translation provided:
+		if type(value) == 'table' then
+			item.id = value[1]
+			item.name = value[2]
+		end
+
+		-- Attempt to get the name of the item as used in the inventory:
+		if system_ini():section_exist(item.id) and system_ini():line_exist(item.id, 'inv_name') then
+			item.name = system_ini():r_string(item.id, 'inv_name')
+		end
+
+		-- Translate the name (we hope):
+		item.name = game.translate_string(item.name)
+
+		-- Strip characters out to make sorting human friendly
 		item.sortable = item.name:lower():gsub('%W+', ' '):gsub('^ +', ''):gsub(' +$', '')
-		item.type = type
 
 		table.insert(self.data, item)
 	end
 end
 
-function dialog:FillList(type)
+function dialog:FillList(category)
 	self.list:Clear()
+	self.category_selector:SetText(category)
+	status.category = category
 
 	for i = 1, #self.data do
-		if (type == nil) or (type == self.data[i].type) then
-			local item = list_item(18)
+		if (category == categories.all) or (category == self.data[i].category) then
+			local item = list_item(self.spawn_item_size)
 
-			item.name:SetText(self.data[i].name)
 			item.id = self.data[i].id
+			item.category = self.data[i].category
+
+			item.nice:SetText(self.data[i].name)
+			item.name:SetText(self.data[i].id)
+
 			self.list:AddExistingItem(item)
 		end
 	end
 end
 
-function dialog:OnButtonKnivesClicked()
-	self:FillList('knives')
-end
-
-function dialog:OnButtonPistolsClicked()
-	self:FillList('pistols')
-end
-
-function dialog:OnButtonShotgunsClicked()
-	self:FillList('shotguns')
-end
-
-function dialog:OnButtonAssultRiflesClicked()
-	self:FillList('assault_rifles')
-end
-
-function dialog:OnButtonSniperRiflesClicked()
-	self:FillList('sniper_rifles')
-end
-
-function dialog:OnButtonHeavyWeaponsClicked()
-	self:FillList('heavy_weapons')
-end
-
-function dialog:OnButtonAmmunitionClicked()
-	self:FillList('ammunition')
-end
-
-function dialog:OnButtonExplosivesClicked()
-	self:FillList('explosives')
-end
-
-function dialog:OnButtonAttachmentsClicked()
-	self:FillList('attachments')
-end
-
-function dialog:OnButtonOutfitsClicked()
-	self:FillList('outfits')
-end
-
-function dialog:OnButtonEquipmentClicked()
-	self:FillList('equipment')
-end
-
-function dialog:OnButtonArtefactsClicked()
-	self:FillList('artefacts')
-end
-
-function dialog:OnButtonDisposablesClicked()
-	self:FillList('disposables')
-end
-
-function dialog:OnButtonQuestItemsClicked()
-	self:FillList('quest_items')
-end
-
-function dialog:OnButtonAllItemsClicked()
-	self:FillList()
+function dialog:OnCategoryItemSelect()
+	self:FillList(self.category_selector:GetText())
 end
 
 function dialog:OnButtonApplyClicked()
@@ -1014,9 +1295,38 @@ function dialog:OnButtonApplyClicked()
 		return
 	end
 
-	local actor = db.actor:id()
+	-- Trigger weather effects/changes:
+	if item.category == categories.weather_effects then
+		level.set_weather(item.id, true)
 
-	alife():create(item.id, db.actor:position(), 0, 0, actor)
+	-- Spawn NPCs in front of the camera:
+	elseif item.category == categories.non_player_characters then
+		local position = db.actor:position()
+		local direction = device().cam_dir
+		local distance = tonumber(self.npc_distance:GetText())
+
+		-- Keep what the user entered for next time
+		status.npc_distance = distance
+
+		-- Fixed range, for sanity
+		if distance == nil or distance < 1 then
+			distance = 1
+		elseif distance > 500 then
+			distance = 500
+		end
+
+		position.x = position.x + (distance * direction.x)
+		position.y = position.y + (distance * direction.y)
+		position.z = position.z + (distance * direction.z)
+
+		alife():create(item.id, position, 0, 0)
+
+	-- Spawn other items in the actors inventory:
+	else
+		local actor = db.actor:id()
+
+		alife():create(item.id, db.actor:position(), 0, 0, actor)
+	end
 end
 
 function dialog:OnButtonCancelClicked()
@@ -1026,6 +1336,8 @@ function dialog:OnButtonCancelClicked()
 end
 
 function dialog:OnKeyboard(dik, keyboard_action)
+	CUIScriptWnd.OnKeyboard(self, dik, keyboard_action)
+
 	local bind = dik_to_bind(dik)
 
 	if bind == key_bindings.kQUIT then
